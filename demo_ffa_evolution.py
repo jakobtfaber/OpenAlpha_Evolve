@@ -113,8 +113,11 @@ import numpy as np
 #       result /= np.sqrt(width)  # Normalize by sqrt(width)
 #       return result
 #   
-#   This is O(n*width). Optimize to O(n) using prefix sums or FFT.
-#   Key constraint: Must handle CIRCULAR convolution (wrap-around at boundaries).
+#   OPTIMIZATION APPROACH (O(n) prefix sum for circular convolution):
+#   1. Create extended array: extended = np.concatenate([profile, profile[:width-1]])
+#   2. Compute prefix sum: prefix = np.zeros(len(extended)+1); prefix[1:] = np.cumsum(extended)
+#   3. Compute result: result[i] = (prefix[i+width] - prefix[i]) / sqrt(width) for i in range(n)
+#   This handles wrap-around correctly by duplicating the first (width-1) elements.
 # END-TASK-DEFINITION
 
 

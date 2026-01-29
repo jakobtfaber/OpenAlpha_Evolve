@@ -72,6 +72,7 @@ import json
 import time
 import sys
 import math  # Import math for inf/nan constants
+import numpy as np  # Import numpy for array handling
 
 # User's code (function to be tested)
 {code}
@@ -147,6 +148,12 @@ if num_tests > 0:
     final_output["average_runtime_ms"] = total_execution_time / num_tests
 
 def custom_json_serializer(obj):
+    # Handle numpy arrays - convert to list
+    if hasattr(obj, 'tolist'):
+        return obj.tolist()
+    # Handle numpy scalar types
+    if hasattr(obj, 'item'):
+        return obj.item()
     if isinstance(obj, float):
         if obj == float('inf'):
             return 'Infinity'
