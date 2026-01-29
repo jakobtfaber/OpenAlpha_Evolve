@@ -4,11 +4,8 @@ FROM python:3.10-slim
 # 2. Set a working directory
 WORKDIR /app
 
-# 3. Copy the temp_script.py (which will be dynamically generated and mounted)
-#    into this working directory.
-#    While the actual script is mounted at runtime, WORKDIR ensures /app exists.
-#    If specific files from the build context were needed in /app, they'd be copied here.
-#    Example: COPY ./my_utility_script.py /app/my_utility_script.py
+# 3. Install numpy for array-based computations (FFA, etc.)
+RUN pip install --no-cache-dir numpy
 
 # 4. Ensure Python's output is unbuffered
 ENV PYTHONUNBUFFERED=1

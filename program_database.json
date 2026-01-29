@@ -1,1 +1,299 @@
-{"programs": []}
+{
+    "ffa_boxcar_filter_v1_gen0_prog0": {
+        "id": "ffa_boxcar_filter_v1_gen0_prog0",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile: np.ndarray, width: int) -> np.ndarray:\n    n = len(profile)\n    width = min(width, n)\n    extended = np.concatenate([profile, profile[:width-1]])\n    prefix = np.zeros(len(extended)+1)\n    prefix[1:] = np.cumsum(extended)\n    result = np.zeros(n)\n    for i in range(n):\n        result[i] = (prefix[i+width] - prefix[i]) / math.sqrt(width)\n    return result",
+        "fitness_scores": {
+            "correctness": 1.0,
+            "runtime_ms": 0.0962309968599584,
+            "passed_tests": 1.0,
+            "total_tests": 1.0,
+            "highest_level_passed": 0.0
+        },
+        "generation": 0,
+        "parent_id": null,
+        "island_id": 0,
+        "errors": [],
+        "status": "evaluated",
+        "created_at": 1769671328.9921546,
+        "task_id": null
+    },
+    "ffa_boxcar_filter_v1_gen0_prog1": {
+        "id": "ffa_boxcar_filter_v1_gen0_prog1",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile: np.ndarray, width: int) -> np.ndarray:\n    n = len(profile)\n    width = min(width, n)\n    extended = np.concatenate([profile, profile[:width-1]])\n    prefix = np.zeros(len(extended)+1)\n    prefix[1:] = np.cumsum(extended)\n    result = np.zeros(n)\n    for i in range(n):\n        result[i] = (prefix[i+width] - prefix[i]) / math.sqrt(width)\n    return result",
+        "fitness_scores": {
+            "correctness": 1.0,
+            "runtime_ms": 0.0589279989071656,
+            "passed_tests": 1.0,
+            "total_tests": 1.0,
+            "highest_level_passed": 0.0
+        },
+        "generation": 0,
+        "parent_id": null,
+        "island_id": 1,
+        "errors": [],
+        "status": "evaluated",
+        "created_at": 1769671328.9933126,
+        "task_id": null
+    },
+    "ffa_boxcar_filter_v1_gen0_prog2": {
+        "id": "ffa_boxcar_filter_v1_gen0_prog2",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile: np.ndarray, width: int) -> np.ndarray:\n    n = len(profile)\n    width = min(width, n)\n    extended = np.concatenate([profile, profile[:width-1]])\n    prefix = np.zeros(len(extended) + 1)\n    prefix[1:] = np.cumsum(extended)\n    result = np.zeros(n)\n    \n    for i in range(n):\n        result[i] = (prefix[i+width] - prefix[i]) / math.sqrt(width)\n    \n    return result",
+        "fitness_scores": {
+            "correctness": 1.0,
+            "runtime_ms": 0.06607500108657405,
+            "passed_tests": 1.0,
+            "total_tests": 1.0,
+            "highest_level_passed": 0.0
+        },
+        "generation": 0,
+        "parent_id": null,
+        "island_id": 1,
+        "errors": [],
+        "status": "evaluated",
+        "created_at": 1769671328.9940844,
+        "task_id": null
+    },
+    "ffa_boxcar_filter_v1_gen0_prog3": {
+        "id": "ffa_boxcar_filter_v1_gen0_prog3",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile: np.ndarray, width: int) -> np.ndarray:\n    n = len(profile)\n    width = min(width, n)\n    \n    extended = np.concatenate([profile, profile[:width-1]])\n    prefix = np.zeros(len(extended)+1)\n    prefix[1:] = np.cumsum(extended)\n    \n    result = np.zeros(n)\n    for i in range(n):\n        result[i] = (prefix[i+width] - prefix[i]) / math.sqrt(width)\n    \n    return result",
+        "fitness_scores": {
+            "correctness": 1.0,
+            "runtime_ms": 0.07842799823265523,
+            "passed_tests": 1.0,
+            "total_tests": 1.0,
+            "highest_level_passed": 0.0
+        },
+        "generation": 0,
+        "parent_id": null,
+        "island_id": 3,
+        "errors": [],
+        "status": "evaluated",
+        "created_at": 1769671328.9948683,
+        "task_id": null
+    },
+    "ffa_boxcar_filter_v1_gen0_prog4": {
+        "id": "ffa_boxcar_filter_v1_gen0_prog4",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile: np.ndarray, width: int) -> np.ndarray:\n    n = len(profile)\n    width = min(width, n)\n    \n    extended = np.concatenate([profile, profile[:width-1]])\n    prefix = np.zeros(len(extended)+1)\n    prefix[1:] = np.cumsum(extended)\n    \n    result = np.zeros(n)\n    for i in range(n):\n        result[i] = (prefix[i+width] - prefix[i]) / math.sqrt(width)\n    \n    return result",
+        "fitness_scores": {
+            "correctness": 1.0,
+            "runtime_ms": 0.06997300079092383,
+            "passed_tests": 1.0,
+            "total_tests": 1.0,
+            "highest_level_passed": 0.0
+        },
+        "generation": 0,
+        "parent_id": null,
+        "island_id": 0,
+        "errors": [],
+        "status": "evaluated",
+        "created_at": 1769671328.9956694,
+        "task_id": null
+    },
+    "ffa_boxcar_filter_v1_gen1_child0_0": {
+        "id": "ffa_boxcar_filter_v1_gen1_child0_0",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile: np.ndarray, width: int) -> np.ndarray:\n    n = len(profile)\n    width = min(width, n)\n    extended = np.concatenate([profile, profile[:width-1]])\n    prefix = np.zeros(len(extended)+1)\n    prefix[1:] = np.cumsum(extended)\n    result = np.zeros(n)\n    for i in range(n):\n        result[i] = (prefix[i+width] - prefix[i]) / np.sqrt(width)\n    return result",
+        "fitness_scores": {
+            "correctness": 1.0,
+            "runtime_ms": 0.10045800081570633,
+            "passed_tests": 1.0,
+            "total_tests": 1.0,
+            "highest_level_passed": 0.0
+        },
+        "generation": 1,
+        "parent_id": "ffa_boxcar_filter_v1_gen0_prog1",
+        "island_id": 1,
+        "errors": [],
+        "status": "evaluated",
+        "created_at": 1769671332.5461469,
+        "task_id": null
+    },
+    "ffa_boxcar_filter_v1_gen1_child0_1": {
+        "id": "ffa_boxcar_filter_v1_gen1_child0_1",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile: np.ndarray, width: int) -> np.ndarray:\n    n = len(profile)\n    width = min(width, n)\n    extended = np.concatenate([profile, profile[:width-1]])\n    prefix = np.zeros(len(extended)+1)\n    prefix[1:] = np.cumsum(extended)\n    result = np.zeros(n)\n    for i in range(n):\n        result[i] = (prefix[i+width] - prefix[i]) / np.sqrt(width)\n    return result",
+        "fitness_scores": {
+            "correctness": 1.0,
+            "runtime_ms": 0.09927900100592524,
+            "passed_tests": 1.0,
+            "total_tests": 1.0,
+            "highest_level_passed": 0.0
+        },
+        "generation": 1,
+        "parent_id": "ffa_boxcar_filter_v1_gen0_prog1",
+        "island_id": 1,
+        "errors": [],
+        "status": "evaluated",
+        "created_at": 1769671332.6096117,
+        "task_id": null
+    },
+    "ffa_boxcar_filter_v1_gen1_child0_2": {
+        "id": "ffa_boxcar_filter_v1_gen1_child0_2",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile: np.ndarray, width: int) -> np.ndarray:\n    n = len(profile)\n    width = min(width, n)\n    extended = np.concatenate([profile, profile[:width-1]])\n    prefix = np.zeros(len(extended)+1)\n    prefix[1:] = np.cumsum(extended)\n        result = (prefix[width:] - prefix[:-width]) / math.sqrt(width)\n    return result",
+        "fitness_scores": {
+            "correctness": 0.0,
+            "runtime_ms": Infinity,
+            "passed_tests": 0.0,
+            "total_tests": 0.0
+        },
+        "generation": 1,
+        "parent_id": "ffa_boxcar_filter_v1_gen0_prog1",
+        "island_id": 1,
+        "errors": [
+            "SyntaxError: unexpected indent at line 10, offset 8"
+        ],
+        "status": "failed_evaluation",
+        "created_at": 1769671331.2475529,
+        "task_id": null
+    },
+    "ffa_boxcar_filter_v1_gen1_child1_0": {
+        "id": "ffa_boxcar_filter_v1_gen1_child1_0",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile: np.ndarray, width: int) -> np.ndarray:\n    n = len(profile)\n    width = min(width, n)\n    extended = np.concatenate([profile, profile[:width-1]])\n    prefix = np.zeros(len(extended) + 1)\n    prefix[1:] = np.cumsum(extended)\n    result = np.zeros(n)\n    \n    for i in range(n):\n        result[i] = (prefix[i + width] - prefix[i]) / math.sqrt(width)\n    \n    return result",
+        "fitness_scores": {
+            "correctness": 1.0,
+            "runtime_ms": 0.08476400034851395,
+            "passed_tests": 1.0,
+            "total_tests": 1.0,
+            "highest_level_passed": 0.0
+        },
+        "generation": 1,
+        "parent_id": "ffa_boxcar_filter_v1_gen0_prog2",
+        "island_id": 2,
+        "errors": [],
+        "status": "evaluated",
+        "created_at": 1769671332.4211924,
+        "task_id": null
+    },
+    "ffa_boxcar_filter_v1_gen1_child1_1": {
+        "id": "ffa_boxcar_filter_v1_gen1_child1_1",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile: np.ndarray, width: int) -> np.ndarray:\n    n = len(profile)\n    width = min(width, n)\n    extended = np.concatenate([profile, profile[:width-1]])\n        prefix = np.cumsum(extended)\n    result = (prefix[width:] - prefix[:-width]) / np.sqrt(width)\n    \n    return result",
+        "fitness_scores": {
+            "correctness": 0.0,
+            "runtime_ms": Infinity,
+            "passed_tests": 0.0,
+            "total_tests": 0.0
+        },
+        "generation": 1,
+        "parent_id": "ffa_boxcar_filter_v1_gen0_prog2",
+        "island_id": 2,
+        "errors": [
+            "SyntaxError: unexpected indent at line 8, offset 8"
+        ],
+        "status": "failed_evaluation",
+        "created_at": 1769671332.2161357,
+        "task_id": null
+    },
+    "ffa_boxcar_filter_v1_gen1_child1_2": {
+        "id": "ffa_boxcar_filter_v1_gen1_child1_2",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile: np.ndarray, width: int) -> np.ndarray:\n    n = len(profile)\n    width = min(width, n)\n    extended = np.concatenate([profile, profile[:width-1]])\n    prefix = np.zeros(len(extended) + 1)\n    prefix[1:] = np.cumsum(extended)\n        result = (prefix[width:] - prefix[:-width]) / np.sqrt(width)\n    return result",
+        "fitness_scores": {
+            "correctness": 0.0,
+            "runtime_ms": Infinity,
+            "passed_tests": 0.0,
+            "total_tests": 0.0
+        },
+        "generation": 1,
+        "parent_id": "ffa_boxcar_filter_v1_gen0_prog2",
+        "island_id": 2,
+        "errors": [
+            "SyntaxError: unexpected indent at line 10, offset 8"
+        ],
+        "status": "failed_evaluation",
+        "created_at": 1769671331.228491,
+        "task_id": null
+    },
+    "ffa_boxcar_filter_v1_gen2_child0_0": {
+        "id": "ffa_boxcar_filter_v1_gen2_child0_0",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile: np.ndarray, width: int) -> np.ndarray:\n    n = len(profile)\n    width = min(width, n)\n    extended = np.concatenate([profile, profile[:width-1]])\n    prefix = np.zeros(len(extended)+1)\n    np.cumsum(extended, out=prefix[1:])\n    result = np.zeros(n)\n    np.true_divide(prefix[width:], np.sqrt(width), out=result)\n    return result",
+        "fitness_scores": {
+            "correctness": 0.0,
+            "runtime_ms": Infinity,
+            "passed_tests": 0.0,
+            "total_tests": 1.0,
+            "highest_level_passed": -1.0
+        },
+        "generation": 2,
+        "parent_id": "ffa_boxcar_filter_v1_gen0_prog1",
+        "island_id": 1,
+        "errors": [
+            "Failed 1 of 1 tests at Level 0 ('default_level')."
+        ],
+        "status": "failed_evaluation",
+        "created_at": 1769671335.979827,
+        "task_id": null
+    },
+    "ffa_boxcar_filter_v1_gen2_child0_1": {
+        "id": "ffa_boxcar_filter_v1_gen2_child0_1",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile: np.ndarray, width: int) -> np.ndarray:\n    n = len(profile)\n    width = min(width, n)\n        extended = np.concatenate([profile, profile[:width-1]])  # Combine profile with wrap-around elements\n        prefix = np.cumsum(extended)  # Compute prefix sum directly\n        result = np.zeros(n)\n        prefix_shifted = np.roll(prefix, -1)  # Shift prefix array to handle wrap-around\n        result = (prefix_shifted[width:] - prefix_shifted[:-width]) / math.sqrt(width)\n    return result",
+        "fitness_scores": {
+            "correctness": 0.0,
+            "runtime_ms": Infinity,
+            "passed_tests": 0.0,
+            "total_tests": 0.0
+        },
+        "generation": 2,
+        "parent_id": "ffa_boxcar_filter_v1_gen0_prog1",
+        "island_id": 1,
+        "errors": [
+            "SyntaxError: unexpected indent at line 7, offset 8"
+        ],
+        "status": "failed_evaluation",
+        "created_at": 1769671335.4901557,
+        "task_id": null
+    },
+    "ffa_boxcar_filter_v1_gen2_child0_2": {
+        "id": "ffa_boxcar_filter_v1_gen2_child0_2",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile: np.ndarray, width: int) -> np.ndarray:\n    n = len(profile)\n    width = min(width, n)\n    extended = np.concatenate([profile, profile[:width-1]])\n        prefix = np.zeros(n+width)\n    prefix[1:] = np.cumsum(extended)\n    result = np.zeros(n)\n            for i in range(n):\n            start_idx = i\n            end_idx = i + width\n            if end_idx > n:\n                end_idx -= n\n            result[i] = (prefix[end_idx] - prefix[start_idx]) / math.sqrt(width)\n        result[i] = (prefix[i+width] - prefix[i]) / math.sqrt(width)\n    return result",
+        "fitness_scores": {
+            "correctness": 0.0,
+            "runtime_ms": Infinity,
+            "passed_tests": 0.0,
+            "total_tests": 0.0
+        },
+        "generation": 2,
+        "parent_id": "ffa_boxcar_filter_v1_gen0_prog1",
+        "island_id": 1,
+        "errors": [
+            "SyntaxError: unexpected indent at line 8, offset 8"
+        ],
+        "status": "failed_evaluation",
+        "created_at": 1769671334.4736764,
+        "task_id": null
+    },
+    "ffa_boxcar_filter_v1_gen2_child1_1": {
+        "id": "ffa_boxcar_filter_v1_gen2_child1_1",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile: np.ndarray, width: int) -> np.ndarray:\n    n = len(profile)\n    width = min(width, n)\n    extended = np.concatenate([profile, profile[:width-1]])\n    prefix = np.zeros(len(extended) + 1)\n    prefix[1:] = np.cumsum(extended)\nresult = (prefix[width:] - prefix[:-width]) / math.sqrt(width)\nreturn result[:n]",
+        "fitness_scores": {
+            "correctness": 0.0,
+            "runtime_ms": Infinity,
+            "passed_tests": 0.0,
+            "total_tests": 0.0
+        },
+        "generation": 2,
+        "parent_id": "ffa_boxcar_filter_v1_gen0_prog2",
+        "island_id": 1,
+        "errors": [
+            "SyntaxError: 'return' outside function at line 11, offset 1"
+        ],
+        "status": "failed_evaluation",
+        "created_at": 1769671335.4975274,
+        "task_id": null
+    },
+    "ffa_boxcar_filter_v1_gen2_child1_2": {
+        "id": "ffa_boxcar_filter_v1_gen2_child1_2",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile: np.ndarray, width: int) -> np.ndarray:\n    n = len(profile)\n    width = min(width, n)\n    extended = np.concatenate([profile, profile[:width-1]])\n        prefix = np.cumsum(extended)\n    result = (prefix[width:] - prefix[:-width]) / np.sqrt(width)\n    \n    return result",
+        "fitness_scores": {
+            "correctness": 0.0,
+            "runtime_ms": Infinity,
+            "passed_tests": 0.0,
+            "total_tests": 0.0
+        },
+        "generation": 2,
+        "parent_id": "ffa_boxcar_filter_v1_gen0_prog2",
+        "island_id": 1,
+        "errors": [
+            "SyntaxError: unexpected indent at line 8, offset 8"
+        ],
+        "status": "failed_evaluation",
+        "created_at": 1769671334.5755045,
+        "task_id": null
+    }
+}
