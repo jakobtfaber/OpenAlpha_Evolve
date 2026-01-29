@@ -88,7 +88,7 @@ import numpy as np
 
 # TASK-DEFINITION
 # id: ffa_boxcar_filter_v1
-# description: Implement boxcar matched filter with CIRCULAR convolution. Takes numpy array (profile) and int (width). Returns array of SAME LENGTH. For each position i, sum elements i to i+width-1 with wrap-around, then divide by sqrt(width).
+# description: Optimize the boxcar_matched_filter function. It must use CIRCULAR convolution (wrap-around at array boundaries). Input is numpy array (profile) and int (width). Output is array of SAME LENGTH as input. The function computes a sliding sum of 'width' consecutive elements with wrap-around, then divides by sqrt(width) for normalization.
 # function_name_to_evolve: boxcar_matched_filter
 # allowed_imports: [numpy, math]
 # input_output_examples:
@@ -98,6 +98,23 @@ import numpy as np
 #   - correctness_tolerance: 1e-8
 #   - snr_error_tolerance: 0.01
 #   - runtime_constraint: within 5% of baseline
+# expert_knowledge: |
+#   WORKING BASELINE CODE (optimize this, keep same interface):
+#   def boxcar_matched_filter(profile: np.ndarray, width: int) -> np.ndarray:
+#       n = len(profile)
+#       width = min(width, n)
+#       result = np.zeros(n)
+#       for i in range(n):
+#           total = 0.0
+#           for j in range(width):
+#               idx = (i + j) % n  # CIRCULAR wrap-around
+#               total += profile[idx]
+#           result[i] = total
+#       result /= np.sqrt(width)  # Normalize by sqrt(width)
+#       return result
+#   
+#   This is O(n*width). Optimize to O(n) using prefix sums or FFT.
+#   Key constraint: Must handle CIRCULAR convolution (wrap-around at boundaries).
 # END-TASK-DEFINITION
 
 
