@@ -1,7 +1,7 @@
 {
     "ffa_boxcar_filter_v1_gen0_prog0": {
         "id": "ffa_boxcar_filter_v1_gen0_prog0",
-        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile, width):\n    if len(profile) < width:\n        return None\n    \n    result = np.zeros(len(profile))\n    \n    for i in range(len(profile)):\n        sum_val = sum(profile[i:i+width] + profile[:max(0, i+width-len(profile))])\n        result[i] = sum_val / math.sqrt(width)\n    \n    return result",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile: np.ndarray, width: int) -> np.ndarray:\n    n = len(profile)\n    width = min(width, n)\n    result = np.zeros(n)\n    \n    prefix_sum = np.zeros(n + width)\n    prefix_sum[:n] = np.cumsum(profile)\n    prefix_sum[n:] = prefix_sum[:width]\n    \n    for i in range(n):\n        result[i] = (prefix_sum[i + width] - prefix_sum[i]) / math.sqrt(width)\n    \n    return result",
         "fitness_scores": {
             "correctness": 0.0,
             "runtime_ms": Infinity,
@@ -16,12 +16,12 @@
             "Execution Error at Level 0 ('default_level'): Execution failed with exit code 1. Docker error: 'Traceback (most recent call last):\n  File \"/app/user_code/temp_script.py\", line 8, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy''"
         ],
         "status": "failed_evaluation",
-        "created_at": 1769670772.295173,
+        "created_at": 1769671064.3859096,
         "task_id": null
     },
     "ffa_boxcar_filter_v1_gen0_prog1": {
         "id": "ffa_boxcar_filter_v1_gen0_prog1",
-        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile, width):\n    result = []\n    for i in range(len(profile)):\n        sum_val = sum(profile[j % len(profile)] for j in range(i, i+width))\n        result.append(sum_val / math.sqrt(width))\n    return np.array(result)",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile: np.ndarray, width: int) -> np.ndarray:\n    n = len(profile)\n    width = min(width, n)\n    \n    prefix_sum = np.zeros(2*n)\n    prefix_sum[:n] = np.cumsum(profile)\n    prefix_sum[n:] = prefix_sum[:n]\n    \n    result = np.zeros(n)\n    for i in range(n):\n        end_idx = i + width\n        result[i] = (prefix_sum[end_idx] - prefix_sum[i]) / math.sqrt(width)\n    \n    return result",
         "fitness_scores": {
             "correctness": 0.0,
             "runtime_ms": Infinity,
@@ -36,12 +36,12 @@
             "Execution Error at Level 0 ('default_level'): Execution failed with exit code 1. Docker error: 'Traceback (most recent call last):\n  File \"/app/user_code/temp_script.py\", line 8, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy''"
         ],
         "status": "failed_evaluation",
-        "created_at": 1769670772.2963314,
+        "created_at": 1769671064.3868463,
         "task_id": null
     },
     "ffa_boxcar_filter_v1_gen0_prog2": {
         "id": "ffa_boxcar_filter_v1_gen0_prog2",
-        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile, width):\n    result = np.zeros(len(profile))\n    \n    for i in range(len(profile)):\n        for j in range(width):\n            result[i] += profile[(i + j) % len(profile)]\n        result[i] /= math.sqrt(width)\n    \n    return result",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile: np.ndarray, width: int) -> np.ndarray:\n    n = len(profile)\n    width = min(width, n)\n    result = np.zeros(n)\n    \n    prefix_sum = np.cumsum(profile)\n    prefix_sum = np.concatenate(([prefix_sum[-1]], prefix_sum[:-1]))  # Circular prefix sum\n    \n    result = (prefix_sum + np.concatenate((prefix_sum[-width+1:], prefix_sum[:n-width+1]))) - np.concatenate((np.zeros(width-1), np.zeros(n-width)))\n    result /= np.sqrt(width)\n    \n    return result",
         "fitness_scores": {
             "correctness": 0.0,
             "runtime_ms": Infinity,
@@ -51,17 +51,17 @@
         },
         "generation": 0,
         "parent_id": null,
-        "island_id": 2,
+        "island_id": 0,
         "errors": [
             "Execution Error at Level 0 ('default_level'): Execution failed with exit code 1. Docker error: 'Traceback (most recent call last):\n  File \"/app/user_code/temp_script.py\", line 8, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy''"
         ],
         "status": "failed_evaluation",
-        "created_at": 1769670772.2970932,
+        "created_at": 1769671064.387571,
         "task_id": null
     },
     "ffa_boxcar_filter_v1_gen0_prog3": {
         "id": "ffa_boxcar_filter_v1_gen0_prog3",
-        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile, width):\n    result = []\n    \n    for i in range(len(profile)):\n        sum_val = sum(profile[j % len(profile)] for j in range(i, i + width))\n        result.append(sum_val / math.sqrt(width))\n    \n    return np.array(result)",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile: np.ndarray, width: int) -> np.ndarray:\n    n = len(profile)\n    width = min(width, n)\n    result = np.zeros(n)\n    \n    prefix_sums = np.zeros(2*n)\n    prefix_sums[:n] = np.cumsum(profile)\n    prefix_sums[n:] = prefix_sums[:n]\n\n    for i in range(n):\n        result[i] = (prefix_sums[i + width] - prefix_sums[i]) / math.sqrt(width)\n\n    return result",
         "fitness_scores": {
             "correctness": 0.0,
             "runtime_ms": Infinity,
@@ -76,12 +76,12 @@
             "Execution Error at Level 0 ('default_level'): Execution failed with exit code 1. Docker error: 'Traceback (most recent call last):\n  File \"/app/user_code/temp_script.py\", line 8, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy''"
         ],
         "status": "failed_evaluation",
-        "created_at": 1769670772.2978375,
+        "created_at": 1769671064.3883252,
         "task_id": null
     },
     "ffa_boxcar_filter_v1_gen0_prog4": {
         "id": "ffa_boxcar_filter_v1_gen0_prog4",
-        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile, width):\n    result = np.zeros(len(profile))\n    sqrt_width = math.sqrt(width)\n    \n    for i in range(len(profile)):\n        sum_val = 0\n        for j in range(width):\n            sum_val += profile[(i+j) % len(profile)]\n        result[i] = sum_val / sqrt_width\n    \n    return result",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile: np.ndarray, width: int) -> np.ndarray:\n    n = len(profile)\n    width = min(width, n)\n    result = np.zeros(n)\n    prefix_sum = np.zeros(2*n)\n    \n    prefix_sum[:n] = np.cumsum(profile)\n    prefix_sum[n:] = prefix_sum[:n]\n    \n    for i in range(n):\n        result[i] = (prefix_sum[i+width] - prefix_sum[i]) / math.sqrt(width)\n    \n    return result",
         "fitness_scores": {
             "correctness": 0.0,
             "runtime_ms": Infinity,
@@ -96,31 +96,32 @@
             "Execution Error at Level 0 ('default_level'): Execution failed with exit code 1. Docker error: 'Traceback (most recent call last):\n  File \"/app/user_code/temp_script.py\", line 8, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy''"
         ],
         "status": "failed_evaluation",
-        "created_at": 1769670772.2986126,
+        "created_at": 1769671064.388944,
         "task_id": null
     },
     "ffa_boxcar_filter_v1_gen1_child0_0": {
         "id": "ffa_boxcar_filter_v1_gen1_child0_0",
-        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile, width):\n    if len(profile) < width:\n        return None\n\n    result = np.zeros(len(profile))\n\n    for i in range(len(profile)):\n        sum_val = np.sum(np.concatenate((profile[i:i+width], profile[:max(0, i+width-len(profile))]))\n        result[i] = sum_val / math.sqrt(width)\n    \n    return result",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile: np.ndarray, width: int) -> np.ndarray:\n    n = len(profile)\n    width = min(width, n)\n    result = np.zeros(n)\n    \n    prefix_sum = np.zeros(n + width)\n    prefix_sum[:n] = np.cumsum(profile)\n    prefix_sum[n:] = prefix_sum[:width]\n    \n    for i in range(n):\n        result[i] = (prefix_sum[i + width] - prefix_sum[i]) / math.sqrt(width)\n    \n    result = np.roll(result, -width//2)  # Shift to properly handle circular convolution\n    \n    return result",
         "fitness_scores": {
             "correctness": 0.0,
             "runtime_ms": Infinity,
             "passed_tests": 0.0,
-            "total_tests": 0.0
+            "total_tests": 0.0,
+            "highest_level_passed": -1.0
         },
         "generation": 1,
         "parent_id": "ffa_boxcar_filter_v1_gen0_prog0",
         "island_id": 0,
         "errors": [
-            "SyntaxError: '(' was never closed at line 11, offset 25"
+            "Execution Error at Level 0 ('default_level'): Execution failed with exit code 1. Docker error: 'Traceback (most recent call last):\n  File \"/app/user_code/temp_script.py\", line 8, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy''"
         ],
         "status": "failed_evaluation",
-        "created_at": 1769670774.901287,
+        "created_at": 1769671067.7172296,
         "task_id": null
     },
     "ffa_boxcar_filter_v1_gen1_child0_1": {
         "id": "ffa_boxcar_filter_v1_gen1_child0_1",
-        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile, width):\n    if len(profile) < width:\n        return None\n    \n    result = np.zeros(len(profile))\n    \n    for i in range(len(profile)):\n        sum_val = sum(np.roll(profile, -i)[:width])\n        result[i] = sum_val / math.sqrt(width)\n    \n    return result",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile: np.ndarray, width: int) -> np.ndarray:\n    n = len(profile)\n    width = min(width, n)\n    result = np.zeros(n)\n    \n    prefix_sum = np.zeros(n + width)\n    prefix_sum[:n] = np.cumsum(profile)\n    prefix_sum[n:] = prefix_sum[:n]\n    \n    for i in range(n):\n        result[i] = (prefix_sum[i + width] - prefix_sum[i]) / math.sqrt(width)\n    \n    return result",
         "fitness_scores": {
             "correctness": 0.0,
             "runtime_ms": Infinity,
@@ -135,31 +136,92 @@
             "Execution Error at Level 0 ('default_level'): Execution failed with exit code 1. Docker error: 'Traceback (most recent call last):\n  File \"/app/user_code/temp_script.py\", line 8, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy''"
         ],
         "status": "failed_evaluation",
-        "created_at": 1769670774.7433221,
+        "created_at": 1769671067.8497891,
         "task_id": null
     },
     "ffa_boxcar_filter_v1_gen1_child0_2": {
         "id": "ffa_boxcar_filter_v1_gen1_child0_2",
-        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile, width):\n    if len(profile) < width:\n        return None\n    \n    result = np.zeros(len(profile))\n    \n    for i in range(len(profile)):\n        sum_val = sum(np.concatenate((profile[i:i+width], profile[:max(0, i+width-len(profile))]))\n        result[i] = sum_val / math.sqrt(width)\n    \n    return result",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile: np.ndarray, width: int) -> np.ndarray:\n    n = len(profile)\n    width = min(width, n)\n    result = np.zeros(n)\n    \n    prefix_sum = np.zeros(n + width)\n    prefix_sum[:n] = np.cumsum(profile)\n    prefix_sum[:width] = np.cumsum(profile[-width:])\n    \n    for i in range(n):\n        result[i] = (prefix_sum[i + width] - prefix_sum[i]) / math.sqrt(width)\n    \n    return result",
         "fitness_scores": {
             "correctness": 0.0,
             "runtime_ms": Infinity,
             "passed_tests": 0.0,
-            "total_tests": 0.0
+            "total_tests": 0.0,
+            "highest_level_passed": -1.0
         },
         "generation": 1,
         "parent_id": "ffa_boxcar_filter_v1_gen0_prog0",
         "island_id": 0,
         "errors": [
-            "SyntaxError: '(' was never closed at line 11, offset 22"
+            "Execution Error at Level 0 ('default_level'): Execution failed with exit code 1. Docker error: 'Traceback (most recent call last):\n  File \"/app/user_code/temp_script.py\", line 8, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy''"
         ],
         "status": "failed_evaluation",
-        "created_at": 1769670774.3610013,
+        "created_at": 1769671067.5882816,
+        "task_id": null
+    },
+    "ffa_boxcar_filter_v1_gen1_child1_0": {
+        "id": "ffa_boxcar_filter_v1_gen1_child1_0",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile: np.ndarray, width: int) -> np.ndarray:\n    n = len(profile)\n    width = min(width, n)\n    \n    prefix_sum = np.cumsum(profile)\n    result = np.zeros(n)\n    for i in range(n):\n        end_idx = (i + width) % n\n        if end_idx >= i:\n            result[i] = (prefix_sum[end_idx] - prefix_sum[i]) / math.sqrt(width)\n        else:\n            result[i] = (prefix_sum[end_idx] + prefix_sum[n] - prefix_sum[i]) / math.sqrt(width)\n    \n    return result",
+        "fitness_scores": {
+            "correctness": 0.0,
+            "runtime_ms": Infinity,
+            "passed_tests": 0.0,
+            "total_tests": 0.0,
+            "highest_level_passed": -1.0
+        },
+        "generation": 1,
+        "parent_id": "ffa_boxcar_filter_v1_gen0_prog1",
+        "island_id": 1,
+        "errors": [
+            "Execution Error at Level 0 ('default_level'): Execution failed with exit code 1. Docker error: 'Traceback (most recent call last):\n  File \"/app/user_code/temp_script.py\", line 8, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy''"
+        ],
+        "status": "failed_evaluation",
+        "created_at": 1769671067.5930612,
+        "task_id": null
+    },
+    "ffa_boxcar_filter_v1_gen1_child1_1": {
+        "id": "ffa_boxcar_filter_v1_gen1_child1_1",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile: np.ndarray, width: int) -> np.ndarray:\n    n = len(profile)\n    width = min(width, n)\n    prefix_sum = np.zeros(2*n)\n    prefix_sum[:n] = np.cumsum(profile)\n    prefix_sum[n:] = prefix_sum[:n]\n    result = np.zeros(n)\n    for i in range(n):\n        end_idx = (i + width) % n\n        if i == 0:\n            result[0] = (prefix_sum[end_idx] - prefix_sum[i]) / math.sqrt(width)\n        else:\n            result[i] = (prefix_sum[end_idx] - prefix_sum[i-1]) / math.sqrt(width)\n    return result",
+        "fitness_scores": {
+            "correctness": 0.0,
+            "runtime_ms": Infinity,
+            "passed_tests": 0.0,
+            "total_tests": 0.0,
+            "highest_level_passed": -1.0
+        },
+        "generation": 1,
+        "parent_id": "ffa_boxcar_filter_v1_gen0_prog1",
+        "island_id": 1,
+        "errors": [
+            "Execution Error at Level 0 ('default_level'): Execution failed with exit code 1. Docker error: 'Traceback (most recent call last):\n  File \"/app/user_code/temp_script.py\", line 8, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy''"
+        ],
+        "status": "failed_evaluation",
+        "created_at": 1769671067.8454,
+        "task_id": null
+    },
+    "ffa_boxcar_filter_v1_gen1_child1_2": {
+        "id": "ffa_boxcar_filter_v1_gen1_child1_2",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile: np.ndarray, width: int) -> np.ndarray:\n    n = len(profile)\n    width = min(width, n)\n    \n    result = np.zeros(n)\n    prefix_sum = np.cumsum(profile)\n\n    for i in range(n):\n        end_idx = (i + width) % n\n        if end_idx > i:\n            result[i] = (prefix_sum[end_idx] - prefix_sum[i]) / math.sqrt(width)\n        else:\n            result[i] = (prefix_sum[end_idx] + prefix_sum[n] - prefix_sum[i]) / math.sqrt(width)\n\n    return result",
+        "fitness_scores": {
+            "correctness": 0.0,
+            "runtime_ms": Infinity,
+            "passed_tests": 0.0,
+            "total_tests": 0.0,
+            "highest_level_passed": -1.0
+        },
+        "generation": 1,
+        "parent_id": "ffa_boxcar_filter_v1_gen0_prog1",
+        "island_id": 1,
+        "errors": [
+            "Execution Error at Level 0 ('default_level'): Execution failed with exit code 1. Docker error: 'Traceback (most recent call last):\n  File \"/app/user_code/temp_script.py\", line 8, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy''"
+        ],
+        "status": "failed_evaluation",
+        "created_at": 1769671068.1647565,
         "task_id": null
     },
     "ffa_boxcar_filter_v1_gen2_child0_0": {
         "id": "ffa_boxcar_filter_v1_gen2_child0_0",
-        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile, width):\n    if len(profile) < width:\n        return None\n    \n    result = np.zeros(len(profile))\n    \n    for i in range(len(profile)):\n        sum_val = np.sum(np.append(profile[i:i+width], profile[:max(0, i+width-len(profile))]))\n        result[i] = sum_val / math.sqrt(width)\n    \n    return result",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile: np.ndarray, width: int) -> np.ndarray:\n    n = len(profile)\n    width = min(width, n)\n    result = np.zeros(n)\n    \n    prefix_sum = np.cumsum(profile)\n    prefix_sum = np.concatenate((prefix_sum, prefix_sum[:width]))\n    \n    for i in range(n):\n        result[i] = (prefix_sum[i + width] - prefix_sum[i]) / math.sqrt(width)\n    \n    return result",
         "fitness_scores": {
             "correctness": 0.0,
             "runtime_ms": Infinity,
@@ -174,64 +236,107 @@
             "Execution Error at Level 0 ('default_level'): Execution failed with exit code 1. Docker error: 'Traceback (most recent call last):\n  File \"/app/user_code/temp_script.py\", line 8, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy''"
         ],
         "status": "failed_evaluation",
-        "created_at": 1769670777.725555,
+        "created_at": 1769671071.0209374,
         "task_id": null
     },
     "ffa_boxcar_filter_v1_gen2_child0_1": {
         "id": "ffa_boxcar_filter_v1_gen2_child0_1",
-        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile, width):\n    if len(profile) < width:\n        return None\n    \n    result = np.zeros(len(profile))\n    \n    for i in range(len(profile)):\n        sum_val = sum(np.concatenate((profile[i:i+width], profile[:max(0, i+width-len(profile))]))\n        result[i] = sum_val / math.sqrt(width)\n    \n    return result",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile: np.ndarray, width: int) -> np.ndarray:\n    n = len(profile)\n    width = min(width, n)\n    result = np.zeros(n)\n    \n    prefix_sum = np.zeros(n + width)\n    prefix_sum[:n] = np.cumsum(profile)\n    prefix_sum[n:] = prefix_sum[:width+n]  # Fixing the circular wrap-around\n    \n    for i in range(n):\n        result[i] = (prefix_sum[i + width] - prefix_sum[i]) / math.sqrt(width)\n    \n    return result",
         "fitness_scores": {
             "correctness": 0.0,
             "runtime_ms": Infinity,
             "passed_tests": 0.0,
-            "total_tests": 0.0
+            "total_tests": 0.0,
+            "highest_level_passed": -1.0
         },
         "generation": 2,
         "parent_id": "ffa_boxcar_filter_v1_gen0_prog0",
         "island_id": 0,
         "errors": [
-            "SyntaxError: '(' was never closed at line 11, offset 22"
+            "Execution Error at Level 0 ('default_level'): Execution failed with exit code 1. Docker error: 'Traceback (most recent call last):\n  File \"/app/user_code/temp_script.py\", line 8, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy''"
         ],
         "status": "failed_evaluation",
-        "created_at": 1769670777.6846383,
+        "created_at": 1769671071.1494284,
         "task_id": null
     },
     "ffa_boxcar_filter_v1_gen2_child0_2": {
         "id": "ffa_boxcar_filter_v1_gen2_child0_2",
-        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile, width):\n    if len(profile) < width:\n        return None\n    \n    result = np.zeros(len(profile))\n    \n    for i in range(len(profile)):\n        sum_val = sum(np.concatenate((profile[i:i+width], profile[:max(0, i+width-len(profile))]))\n        result[i] = sum_val / math.sqrt(width)\n    \n    return result",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile: np.ndarray, width: int) -> np.ndarray:\n    n = len(profile)\n    width = min(width, n)\n    result = np.zeros(n)\n    \n    prefix_sum = np.zeros(n + 1)\n    prefix_sum[1:] = np.cumsum(profile)  # Shifted one position to the right for circular convolution\n    \n    for i in range(n):\n        idx_end = (i + width) % n  # Calculate the end index for circular convolution\n        idx_start = (i + 1) % n  # Calculate the start index for circular convolution\n        \n        if idx_start <= idx_end:\n            result[i] = (prefix_sum[idx_end + 1] - prefix_sum[idx_start]) / math.sqrt(width)\n        else:\n            result[i] = (prefix_sum[-1] - prefix_sum[idx_start] + prefix_sum[idx_end + 1]) / math.sqrt(width)\n    \n    return result",
         "fitness_scores": {
             "correctness": 0.0,
             "runtime_ms": Infinity,
             "passed_tests": 0.0,
-            "total_tests": 0.0
+            "total_tests": 0.0,
+            "highest_level_passed": -1.0
         },
         "generation": 2,
         "parent_id": "ffa_boxcar_filter_v1_gen0_prog0",
         "island_id": 0,
         "errors": [
-            "SyntaxError: '(' was never closed at line 11, offset 22"
+            "Execution Error at Level 0 ('default_level'): Execution failed with exit code 1. Docker error: 'Traceback (most recent call last):\n  File \"/app/user_code/temp_script.py\", line 8, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy''"
         ],
         "status": "failed_evaluation",
-        "created_at": 1769670777.5723755,
+        "created_at": 1769671072.075311,
         "task_id": null
     },
     "ffa_boxcar_filter_v1_gen2_child1_0": {
         "id": "ffa_boxcar_filter_v1_gen2_child1_0",
-        "code": "import numpy as np\nimport math\nimport math\n\ndef boxcar_matched_filter(profile, width):\n    result = []\n    for i in range(len(profile)):\n        sum_val = sum(profile[j % len(profile)] for j in range(i, i+width))\n                result.append(sum_val / np.sqrt(width))\n    return np.array(result)",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile: np.ndarray, width: int) -> np.ndarray:\n    n = len(profile)\n    width = min(width, n)\n    \n    prefix_sum = np.zeros(2*n)\n    prefix_sum[:n] = np.cumsum(profile)\n    prefix_sum[n:] = prefix_sum[:n]\n    \n    result = np.zeros(n)\n    for i in range(n):\n        end_idx = (i + width) % n  # Adjusted for circular wrap-around\n        if i <= n - width:\n            result[i] = (prefix_sum[end_idx] - prefix_sum[i]) / math.sqrt(width)\n        else:\n            result[i] = (prefix_sum[end_idx] - prefix_sum[i] + prefix_sum[n]) / math.sqrt(width)  # Handle circular wrap-around\n        \n    return result",
         "fitness_scores": {
             "correctness": 0.0,
             "runtime_ms": Infinity,
             "passed_tests": 0.0,
-            "total_tests": 0.0
+            "total_tests": 0.0,
+            "highest_level_passed": -1.0
         },
         "generation": 2,
         "parent_id": "ffa_boxcar_filter_v1_gen0_prog1",
         "island_id": 1,
         "errors": [
-            "SyntaxError: unexpected indent at line 9, offset 16"
+            "Execution Error at Level 0 ('default_level'): Execution failed with exit code 1. Docker error: 'Traceback (most recent call last):\n  File \"/app/user_code/temp_script.py\", line 8, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy''"
         ],
         "status": "failed_evaluation",
-        "created_at": 1769670776.9297848,
+        "created_at": 1769671075.4365146,
+        "task_id": null
+    },
+    "ffa_boxcar_filter_v1_gen2_child1_1": {
+        "id": "ffa_boxcar_filter_v1_gen2_child1_1",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile: np.ndarray, width: int) -> np.ndarray:\n    n = len(profile)\n    width = min(width, n)\n    \n    prefix_sum = np.zeros(2*n)\n    prefix_sum[:n] = np.cumsum(profile)\n    prefix_sum[n:] = prefix_sum[:n]\n    \n    result = np.zeros(n)\n    for i in range(n):\n        end_idx = i + width\n        result[i] = (prefix_sum[end_idx] - prefix_sum[i] + prefix_sum[n + end_idx] - prefix_sum[n + i]) / math.sqrt(width)\n    \n    return result",
+        "fitness_scores": {
+            "correctness": 0.0,
+            "runtime_ms": Infinity,
+            "passed_tests": 0.0,
+            "total_tests": 0.0,
+            "highest_level_passed": -1.0
+        },
+        "generation": 2,
+        "parent_id": "ffa_boxcar_filter_v1_gen0_prog1",
+        "island_id": 1,
+        "errors": [
+            "Execution Error at Level 0 ('default_level'): Execution failed with exit code 1. Docker error: 'Traceback (most recent call last):\n  File \"/app/user_code/temp_script.py\", line 8, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy''"
+        ],
+        "status": "failed_evaluation",
+        "created_at": 1769671071.2095075,
+        "task_id": null
+    },
+    "ffa_boxcar_filter_v1_gen2_child1_2": {
+        "id": "ffa_boxcar_filter_v1_gen2_child1_2",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile: np.ndarray, width: int) -> np.ndarray:\n    n = len(profile)\n    width = min(width, n)\n    \n    prefix_sum = np.zeros(2*n)\n    prefix_sum[:n] = np.cumsum(profile)\n    prefix_sum[n:] = prefix_sum[:n]\n    \n    result = np.zeros(n)\n    sum_array = prefix_sum[n:] - prefix_sum[:n]  # Calculate the circular sum array\n    \n    for i in range(n):\n        result[i] = sum_array[i] / math.sqrt(width)\n    \n    return result",
+        "fitness_scores": {
+            "correctness": 0.0,
+            "runtime_ms": Infinity,
+            "passed_tests": 0.0,
+            "total_tests": 0.0,
+            "highest_level_passed": -1.0
+        },
+        "generation": 2,
+        "parent_id": "ffa_boxcar_filter_v1_gen0_prog1",
+        "island_id": 1,
+        "errors": [
+            "Execution Error at Level 0 ('default_level'): Execution failed with exit code 1. Docker error: 'Traceback (most recent call last):\n  File \"/app/user_code/temp_script.py\", line 8, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy''"
+        ],
+        "status": "failed_evaluation",
+        "created_at": 1769671071.6571891,
         "task_id": null
     }
 }

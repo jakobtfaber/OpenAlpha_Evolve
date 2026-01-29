@@ -563,11 +563,15 @@ class AlphaEvolveLSPBridge(MethodDispatcher):
         if match:
             try:
                 yaml_content = match.group(1)
-                yaml_lines = [
-                    line.lstrip('# ').strip()
-                    for line in yaml_content.split('\n')
-                    if line.strip()
-                ]
+                # Process each line: remove only the "# " prefix to preserve YAML indentation
+                yaml_lines = []
+                for line in yaml_content.split('\n'):
+                    if line.startswith('# '):
+                        yaml_lines.append(line[2:])  # Remove exactly "# " prefix
+                    elif line.startswith('#'):
+                        yaml_lines.append(line[1:].lstrip())  # Handle "# " with extra spaces
+                    elif line.strip():  # Non-comment, non-empty line
+                        yaml_lines.append(line)
                 task_def = yaml.safe_load('\n'.join(yaml_lines))
                 return task_def or {}
             except Exception:
