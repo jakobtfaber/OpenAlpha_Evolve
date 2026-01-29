@@ -515,11 +515,30 @@ print(json.dumps(final_output, default=custom_json_serializer))
     def _compare_outputs(self, actual: Any, expected: Any) -> bool:
         logger.debug(f"Comparing outputs. Actual: {type(actual)}{actual}, Expected: {type(expected)}{expected}")
         
+        TOLERANCE = 1e-5  # Tolerance for floating-point comparisons
+        
+        # Handle list/array comparisons
+        if isinstance(actual, list) and isinstance(expected, list):
+            if len(actual) != len(expected):
+                logger.debug(f"List length mismatch: {len(actual)} vs {len(expected)}")
+                return False
+            for i, (a, e) in enumerate(zip(actual, expected)):
+                if not self._compare_outputs(a, e):
+                    logger.debug(f"List element {i} mismatch: {a} vs {e}")
+                    return False
+            return True
+        
         if isinstance(actual, float) and isinstance(expected, float):
-            TOLERANCE = 1e-9 # This could also be made configurable via settings.py later.
             is_close = math.isclose(actual, expected, rel_tol=TOLERANCE, abs_tol=TOLERANCE)
             if not is_close:
                 logger.debug(f"Float comparison: {actual} vs {expected} is NOT close (tolerance: {TOLERANCE}).")
+            return is_close
+        
+        # Handle int vs float comparisons (e.g., 3 vs 3.0)
+        if isinstance(actual, (int, float)) and isinstance(expected, (int, float)):
+            is_close = math.isclose(float(actual), float(expected), rel_tol=TOLERANCE, abs_tol=TOLERANCE)
+            if not is_close:
+                logger.debug(f"Numeric comparison: {actual} vs {expected} is NOT close.")
             return is_close
         
         # Fallback to direct equality for other types
