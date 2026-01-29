@@ -41,8 +41,19 @@ pytest
 # Utilities
 # jinja2
 
+# Plotting
+matplotlib
+SciencePlots
+
+# Linting
+ruff
+
 # API/Web (Optional, if exposing functionality)
 # fastapi
 # uvicorn
 
 # For potential future use or specific agent needs (example)
+
+# LSP Support
+lsprotocol
+python-jsonrpc-server

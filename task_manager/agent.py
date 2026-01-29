@@ -91,13 +91,21 @@ class TaskManagerAgent(TaskManagerInterface):
         logger.info(f"Finished evaluating population. {len(evaluated_programs)} programs processed.")
         return evaluated_programs
 
-    async def manage_evolutionary_cycle(self):
+    async def manage_evolutionary_cycle(self, callback: Optional[callable] = None):
         logger.info(f"Starting evolutionary cycle for task: {self.task_definition.description[:50]}...")
         current_population = await self.initialize_population()
         current_population = await self.evaluate_population(current_population)
 
         for gen in range(1, self.num_generations + 1):
             logger.info(f"--- Generation {gen}/{self.num_generations} ---")
+            
+            if callback:
+                await callback({
+                    "generation": gen,
+                    "total_generations": self.num_generations,
+                    "status": "evolving",
+                    "population_size": len(current_population)
+                })
 
             # Select parents from islands
             parents = self.selection_controller.select_parents(current_population, self.num_parents_to_select)
@@ -146,6 +154,12 @@ class TaskManagerAgent(TaskManagerInterface):
             )
             if best_program_this_gen:
                 logger.info(f"Generation {gen}: Best program: ID={best_program_this_gen[0].id}, Fitness={best_program_this_gen[0].fitness_scores}")
+                if callback:
+                    await callback({
+                        "generation": gen,
+                        "best_fitness": best_program_this_gen[0].fitness_scores,
+                        "best_program_id": best_program_this_gen[0].id
+                    })
             else:
                 logger.warning(f"Generation {gen}: No programs in current population after survival selection.")
                 break
