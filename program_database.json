@@ -1,107 +1,107 @@
 {
     "ffa_boxcar_filter_v1_gen0_prog0": {
         "id": "ffa_boxcar_filter_v1_gen0_prog0",
-        "code": "def boxcar_matched_filter(data, width):\n    filtered_data = []\n    for i in range(len(data)-width+1):\n        sum_val = sum(data[i:i+width])\n        filtered_data.append(sum_val)\n    return filtered_data",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile, width):\n    if len(profile) < width:\n        return None\n    \n    result = np.zeros(len(profile))\n    \n    for i in range(len(profile)):\n        sum_val = sum(profile[i:i+width] + profile[:max(0, i+width-len(profile))])\n        result[i] = sum_val / math.sqrt(width)\n    \n    return result",
         "fitness_scores": {
             "correctness": 0.0,
             "runtime_ms": Infinity,
             "passed_tests": 0.0,
-            "total_tests": 1.0,
+            "total_tests": 0.0,
             "highest_level_passed": -1.0
         },
         "generation": 0,
         "parent_id": null,
         "island_id": 0,
         "errors": [
-            "Failed 1 of 1 tests at Level 0 ('default_level')."
+            "Execution Error at Level 0 ('default_level'): Execution failed with exit code 1. Docker error: 'Traceback (most recent call last):\n  File \"/app/user_code/temp_script.py\", line 8, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy''"
         ],
         "status": "failed_evaluation",
-        "created_at": 1769670548.4300072,
+        "created_at": 1769670772.295173,
         "task_id": null
     },
     "ffa_boxcar_filter_v1_gen0_prog1": {
         "id": "ffa_boxcar_filter_v1_gen0_prog1",
-        "code": "def boxcar_matched_filter(signal, boxcar_length):\n    if not signal or not isinstance(signal, list) or not all(isinstance(x, (int, float)) for x in signal):\n        return None\n    \n    if not isinstance(boxcar_length, int) or boxcar_length < 1:\n        return None\n    \n    if len(signal) < boxcar_length:\n        return None\n    \n    result = []\n    for i in range(len(signal) - boxcar_length + 1):\n        sum_val = sum(signal[i:i+boxcar_length])\n        result.append(sum_val)\n    \n    return result",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile, width):\n    result = []\n    for i in range(len(profile)):\n        sum_val = sum(profile[j % len(profile)] for j in range(i, i+width))\n        result.append(sum_val / math.sqrt(width))\n    return np.array(result)",
         "fitness_scores": {
             "correctness": 0.0,
             "runtime_ms": Infinity,
             "passed_tests": 0.0,
-            "total_tests": 1.0,
+            "total_tests": 0.0,
             "highest_level_passed": -1.0
         },
         "generation": 0,
         "parent_id": null,
         "island_id": 1,
         "errors": [
-            "Failed 1 of 1 tests at Level 0 ('default_level')."
+            "Execution Error at Level 0 ('default_level'): Execution failed with exit code 1. Docker error: 'Traceback (most recent call last):\n  File \"/app/user_code/temp_script.py\", line 8, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy''"
         ],
         "status": "failed_evaluation",
-        "created_at": 1769670548.4307702,
+        "created_at": 1769670772.2963314,
         "task_id": null
     },
     "ffa_boxcar_filter_v1_gen0_prog2": {
         "id": "ffa_boxcar_filter_v1_gen0_prog2",
-        "code": "def boxcar_matched_filter(signal, width):\n    if len(signal) < width:\n        return None\n    \n    filtered_signal = []\n    for i in range(len(signal) - width + 1):\n        sum_val = sum(signal[i:i+width])\n        filtered_signal.append(sum_val)\n    \n    return filtered_signal",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile, width):\n    result = np.zeros(len(profile))\n    \n    for i in range(len(profile)):\n        for j in range(width):\n            result[i] += profile[(i + j) % len(profile)]\n        result[i] /= math.sqrt(width)\n    \n    return result",
         "fitness_scores": {
             "correctness": 0.0,
             "runtime_ms": Infinity,
             "passed_tests": 0.0,
-            "total_tests": 1.0,
+            "total_tests": 0.0,
             "highest_level_passed": -1.0
         },
         "generation": 0,
         "parent_id": null,
         "island_id": 2,
         "errors": [
-            "Failed 1 of 1 tests at Level 0 ('default_level')."
+            "Execution Error at Level 0 ('default_level'): Execution failed with exit code 1. Docker error: 'Traceback (most recent call last):\n  File \"/app/user_code/temp_script.py\", line 8, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy''"
         ],
         "status": "failed_evaluation",
-        "created_at": 1769670548.4312592,
+        "created_at": 1769670772.2970932,
         "task_id": null
     },
     "ffa_boxcar_filter_v1_gen0_prog3": {
         "id": "ffa_boxcar_filter_v1_gen0_prog3",
-        "code": "def boxcar_matched_filter(signal, boxcar_length):\n    if not signal or len(signal) < boxcar_length:\n        return None\n    \n    filtered_signal = []\n    for i in range(len(signal) - boxcar_length + 1):\n        sum_boxcar = sum(signal[i:i+boxcar_length])\n        filtered_signal.append(sum_boxcar)\n    \n    return filtered_signal",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile, width):\n    result = []\n    \n    for i in range(len(profile)):\n        sum_val = sum(profile[j % len(profile)] for j in range(i, i + width))\n        result.append(sum_val / math.sqrt(width))\n    \n    return np.array(result)",
         "fitness_scores": {
             "correctness": 0.0,
             "runtime_ms": Infinity,
             "passed_tests": 0.0,
-            "total_tests": 1.0,
+            "total_tests": 0.0,
             "highest_level_passed": -1.0
         },
         "generation": 0,
         "parent_id": null,
         "island_id": 1,
         "errors": [
-            "Failed 1 of 1 tests at Level 0 ('default_level')."
+            "Execution Error at Level 0 ('default_level'): Execution failed with exit code 1. Docker error: 'Traceback (most recent call last):\n  File \"/app/user_code/temp_script.py\", line 8, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy''"
         ],
         "status": "failed_evaluation",
-        "created_at": 1769670548.4317358,
+        "created_at": 1769670772.2978375,
         "task_id": null
     },
     "ffa_boxcar_filter_v1_gen0_prog4": {
         "id": "ffa_boxcar_filter_v1_gen0_prog4",
-        "code": "def boxcar_matched_filter(signal, boxcar_length):\n    filtered_signal = []\n    for i in range(len(signal) - boxcar_length + 1):\n        sum_val = sum(signal[i:i+boxcar_length])\n        filtered_signal.append(sum_val)\n    return filtered_signal",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile, width):\n    result = np.zeros(len(profile))\n    sqrt_width = math.sqrt(width)\n    \n    for i in range(len(profile)):\n        sum_val = 0\n        for j in range(width):\n            sum_val += profile[(i+j) % len(profile)]\n        result[i] = sum_val / sqrt_width\n    \n    return result",
         "fitness_scores": {
             "correctness": 0.0,
             "runtime_ms": Infinity,
             "passed_tests": 0.0,
-            "total_tests": 1.0,
+            "total_tests": 0.0,
             "highest_level_passed": -1.0
         },
         "generation": 0,
         "parent_id": null,
         "island_id": 3,
         "errors": [
-            "Failed 1 of 1 tests at Level 0 ('default_level')."
+            "Execution Error at Level 0 ('default_level'): Execution failed with exit code 1. Docker error: 'Traceback (most recent call last):\n  File \"/app/user_code/temp_script.py\", line 8, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy''"
         ],
         "status": "failed_evaluation",
-        "created_at": 1769670548.432226,
+        "created_at": 1769670772.2986126,
         "task_id": null
     },
     "ffa_boxcar_filter_v1_gen1_child0_0": {
         "id": "ffa_boxcar_filter_v1_gen1_child0_0",
-        "code": "def boxcar_matched_filter(data, width):\n        filtered_data = []\n    sum_val = sum(data[:width])\n    filtered_data.append(sum_val)\n    for i in range(1, len(data)-width+1):\n        sum_val = sum_val - data[i-1] + data[i+width-1]\n        filtered_data.append(sum_val)\n    return filtered_data",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile, width):\n    if len(profile) < width:\n        return None\n\n    result = np.zeros(len(profile))\n\n    for i in range(len(profile)):\n        sum_val = np.sum(np.concatenate((profile[i:i+width], profile[:max(0, i+width-len(profile))]))\n        result[i] = sum_val / math.sqrt(width)\n    \n    return result",
         "fitness_scores": {
             "correctness": 0.0,
             "runtime_ms": Infinity,
@@ -112,34 +112,35 @@
         "parent_id": "ffa_boxcar_filter_v1_gen0_prog0",
         "island_id": 0,
         "errors": [
-            "SyntaxError: unindent does not match any outer indentation level at line 3, offset 32"
+            "SyntaxError: '(' was never closed at line 11, offset 25"
         ],
         "status": "failed_evaluation",
-        "created_at": 1769670551.1652105,
+        "created_at": 1769670774.901287,
         "task_id": null
     },
     "ffa_boxcar_filter_v1_gen1_child0_1": {
         "id": "ffa_boxcar_filter_v1_gen1_child0_1",
-        "code": "def boxcar_matched_filter(data, width):\n    filtered_data = []\n        for i in range(len(data)-width+1):\n        sum_val = sum(data[i:i+width])/width\n        filtered_data.append(sum_val)\n    return filtered_data",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile, width):\n    if len(profile) < width:\n        return None\n    \n    result = np.zeros(len(profile))\n    \n    for i in range(len(profile)):\n        sum_val = sum(np.roll(profile, -i)[:width])\n        result[i] = sum_val / math.sqrt(width)\n    \n    return result",
         "fitness_scores": {
             "correctness": 0.0,
             "runtime_ms": Infinity,
             "passed_tests": 0.0,
-            "total_tests": 0.0
+            "total_tests": 0.0,
+            "highest_level_passed": -1.0
         },
         "generation": 1,
         "parent_id": "ffa_boxcar_filter_v1_gen0_prog0",
         "island_id": 0,
         "errors": [
-            "SyntaxError: unexpected indent at line 3, offset 8"
+            "Execution Error at Level 0 ('default_level'): Execution failed with exit code 1. Docker error: 'Traceback (most recent call last):\n  File \"/app/user_code/temp_script.py\", line 8, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy''"
         ],
         "status": "failed_evaluation",
-        "created_at": 1769670550.0229177,
+        "created_at": 1769670774.7433221,
         "task_id": null
     },
     "ffa_boxcar_filter_v1_gen1_child0_2": {
         "id": "ffa_boxcar_filter_v1_gen1_child0_2",
-        "code": "def boxcar_matched_filter(data, width):\n    filtered_data = []\n    for i in range(len(data)-width+1):\n                sum_val = sum(data[i:i+width])/width\n        filtered_data.append(sum_val)\n    return filtered_data",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile, width):\n    if len(profile) < width:\n        return None\n    \n    result = np.zeros(len(profile))\n    \n    for i in range(len(profile)):\n        sum_val = sum(np.concatenate((profile[i:i+width], profile[:max(0, i+width-len(profile))]))\n        result[i] = sum_val / math.sqrt(width)\n    \n    return result",
         "fitness_scores": {
             "correctness": 0.0,
             "runtime_ms": Infinity,
@@ -150,91 +151,35 @@
         "parent_id": "ffa_boxcar_filter_v1_gen0_prog0",
         "island_id": 0,
         "errors": [
-            "SyntaxError: unindent does not match any outer indentation level at line 5, offset 38"
+            "SyntaxError: '(' was never closed at line 11, offset 22"
         ],
         "status": "failed_evaluation",
-        "created_at": 1769670549.6912189,
-        "task_id": null
-    },
-    "ffa_boxcar_filter_v1_gen1_child1_0": {
-        "id": "ffa_boxcar_filter_v1_gen1_child1_0",
-        "code": "def boxcar_matched_filter(signal, boxcar_length):\n        if not signal or not isinstance(signal, list) or not all(isinstance(x, (int, float)) for x in signal) or len(signal) < 1:\n        return None\n    \n    if not isinstance(boxcar_length, int) or boxcar_length < 1:\n        return None\n    \n    if len(signal) < boxcar_length:\n        return None\n    \n    result = []\n    for i in range(len(signal) - boxcar_length + 1):\n        sum_val = sum(signal[i:i+boxcar_length])\n        result.append(sum_val)\n    \n    return result",
-        "fitness_scores": {
-            "correctness": 0.0,
-            "runtime_ms": Infinity,
-            "passed_tests": 0.0,
-            "total_tests": 0.0
-        },
-        "generation": 1,
-        "parent_id": "ffa_boxcar_filter_v1_gen0_prog1",
-        "island_id": 1,
-        "errors": [
-            "SyntaxError: expected an indented block after 'if' statement on line 2 at line 3, offset 9"
-        ],
-        "status": "failed_evaluation",
-        "created_at": 1769670550.087209,
-        "task_id": null
-    },
-    "ffa_boxcar_filter_v1_gen1_child1_1": {
-        "id": "ffa_boxcar_filter_v1_gen1_child1_1",
-        "code": "def boxcar_matched_filter(signal, boxcar_length):\n        if not signal or not isinstance(signal, list) or not all(isinstance(x, (int, float)) for x in signal) or len(signal) < boxcar_length:\n        return None\n    \n    if not isinstance(boxcar_length, int) or boxcar_length < 1:\n        return None\n    \n    if len(signal) < boxcar_length:\n        return None\n    \n    result = []\n    for i in range(len(signal) - boxcar_length + 1):\n        sum_val = sum(signal[i:i+boxcar_length])\n        result.append(sum_val)\n    \n    return result",
-        "fitness_scores": {
-            "correctness": 0.0,
-            "runtime_ms": Infinity,
-            "passed_tests": 0.0,
-            "total_tests": 0.0
-        },
-        "generation": 1,
-        "parent_id": "ffa_boxcar_filter_v1_gen0_prog1",
-        "island_id": 1,
-        "errors": [
-            "SyntaxError: expected an indented block after 'if' statement on line 2 at line 3, offset 9"
-        ],
-        "status": "failed_evaluation",
-        "created_at": 1769670550.1069682,
-        "task_id": null
-    },
-    "ffa_boxcar_filter_v1_gen1_child1_2": {
-        "id": "ffa_boxcar_filter_v1_gen1_child1_2",
-        "code": "def boxcar_matched_filter(signal, boxcar_length):\n    if not signal or not isinstance(signal, list) or not all(isinstance(x, (int, float)) for x in signal):\n        return None\n    \n    if not isinstance(boxcar_length, int) or boxcar_length < 1:\n        return None\n    \n    if len(signal) < boxcar_length:\n        return None\n    \n    result = []\n    for i in range(len(signal) - boxcar_length + 1):\n                sum_val = sum(signal[i:i + boxcar_length])\n        result.append(sum_val)\n    \n    return result",
-        "fitness_scores": {
-            "correctness": 0.0,
-            "runtime_ms": Infinity,
-            "passed_tests": 0.0,
-            "total_tests": 0.0
-        },
-        "generation": 1,
-        "parent_id": "ffa_boxcar_filter_v1_gen0_prog1",
-        "island_id": 1,
-        "errors": [
-            "SyntaxError: unindent does not match any outer indentation level at line 14, offset 31"
-        ],
-        "status": "failed_evaluation",
-        "created_at": 1769670549.807522,
+        "created_at": 1769670774.3610013,
         "task_id": null
     },
     "ffa_boxcar_filter_v1_gen2_child0_0": {
         "id": "ffa_boxcar_filter_v1_gen2_child0_0",
-        "code": "def boxcar_matched_filter(data, width):\n    filtered_data = []\n    for i in range(len(data)-width+1):\n                sum_val = sum(data[i:i+width]) / width\n        filtered_data.append(sum_val)\n    return filtered_data",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile, width):\n    if len(profile) < width:\n        return None\n    \n    result = np.zeros(len(profile))\n    \n    for i in range(len(profile)):\n        sum_val = np.sum(np.append(profile[i:i+width], profile[:max(0, i+width-len(profile))]))\n        result[i] = sum_val / math.sqrt(width)\n    \n    return result",
         "fitness_scores": {
             "correctness": 0.0,
             "runtime_ms": Infinity,
             "passed_tests": 0.0,
-            "total_tests": 0.0
+            "total_tests": 0.0,
+            "highest_level_passed": -1.0
         },
         "generation": 2,
         "parent_id": "ffa_boxcar_filter_v1_gen0_prog0",
         "island_id": 0,
         "errors": [
-            "SyntaxError: unindent does not match any outer indentation level at line 5, offset 38"
+            "Execution Error at Level 0 ('default_level'): Execution failed with exit code 1. Docker error: 'Traceback (most recent call last):\n  File \"/app/user_code/temp_script.py\", line 8, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy''"
         ],
         "status": "failed_evaluation",
-        "created_at": 1769670551.7981737,
+        "created_at": 1769670777.725555,
         "task_id": null
     },
     "ffa_boxcar_filter_v1_gen2_child0_1": {
         "id": "ffa_boxcar_filter_v1_gen2_child0_1",
-        "code": "def boxcar_matched_filter(data, width):\n    filtered_data = []\n    for i in range(len(data)-width+1):\n                sum_val = sum(data[i:i+width])/width\n        filtered_data.append(sum_val)\n    return filtered_data",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile, width):\n    if len(profile) < width:\n        return None\n    \n    result = np.zeros(len(profile))\n    \n    for i in range(len(profile)):\n        sum_val = sum(np.concatenate((profile[i:i+width], profile[:max(0, i+width-len(profile))]))\n        result[i] = sum_val / math.sqrt(width)\n    \n    return result",
         "fitness_scores": {
             "correctness": 0.0,
             "runtime_ms": Infinity,
@@ -245,15 +190,15 @@
         "parent_id": "ffa_boxcar_filter_v1_gen0_prog0",
         "island_id": 0,
         "errors": [
-            "SyntaxError: unindent does not match any outer indentation level at line 5, offset 38"
+            "SyntaxError: '(' was never closed at line 11, offset 22"
         ],
         "status": "failed_evaluation",
-        "created_at": 1769670551.7568622,
+        "created_at": 1769670777.6846383,
         "task_id": null
     },
     "ffa_boxcar_filter_v1_gen2_child0_2": {
         "id": "ffa_boxcar_filter_v1_gen2_child0_2",
-        "code": "def boxcar_matched_filter(data, width):\n    filtered_data = []\n    for i in range(len(data)-width+1):\n            sum_val = sum(data[i:i+width])/width\n        filtered_data.append(sum_val)\n    return filtered_data",
+        "code": "import numpy as np\nimport math\n\ndef boxcar_matched_filter(profile, width):\n    if len(profile) < width:\n        return None\n    \n    result = np.zeros(len(profile))\n    \n    for i in range(len(profile)):\n        sum_val = sum(np.concatenate((profile[i:i+width], profile[:max(0, i+width-len(profile))]))\n        result[i] = sum_val / math.sqrt(width)\n    \n    return result",
         "fitness_scores": {
             "correctness": 0.0,
             "runtime_ms": Infinity,
@@ -264,15 +209,15 @@
         "parent_id": "ffa_boxcar_filter_v1_gen0_prog0",
         "island_id": 0,
         "errors": [
-            "SyntaxError: unindent does not match any outer indentation level at line 5, offset 38"
+            "SyntaxError: '(' was never closed at line 11, offset 22"
         ],
         "status": "failed_evaluation",
-        "created_at": 1769670551.7284975,
+        "created_at": 1769670777.5723755,
         "task_id": null
     },
     "ffa_boxcar_filter_v1_gen2_child1_0": {
         "id": "ffa_boxcar_filter_v1_gen2_child1_0",
-        "code": "def boxcar_matched_filter(signal, boxcar_length):\n        if not signal or not isinstance(signal, list) or not all(isinstance(x, (int, float)) for x in signal) or len(signal) < 1:\n        return None\n    \n    if not isinstance(boxcar_length, int) or boxcar_length < 1:\n        return None\n    \n    if len(signal) < boxcar_length:\n        return None\n    \n    result = []\n    for i in range(len(signal) - boxcar_length + 1):\n        sum_val = sum(signal[i:i+boxcar_length])\n        result.append(sum_val)\n    \n    return result",
+        "code": "import numpy as np\nimport math\nimport math\n\ndef boxcar_matched_filter(profile, width):\n    result = []\n    for i in range(len(profile)):\n        sum_val = sum(profile[j % len(profile)] for j in range(i, i+width))\n                result.append(sum_val / np.sqrt(width))\n    return np.array(result)",
         "fitness_scores": {
             "correctness": 0.0,
             "runtime_ms": Infinity,
@@ -283,48 +228,10 @@
         "parent_id": "ffa_boxcar_filter_v1_gen0_prog1",
         "island_id": 1,
         "errors": [
-            "SyntaxError: expected an indented block after 'if' statement on line 2 at line 3, offset 9"
+            "SyntaxError: unexpected indent at line 9, offset 16"
         ],
         "status": "failed_evaluation",
-        "created_at": 1769670552.1723523,
-        "task_id": null
-    },
-    "ffa_boxcar_filter_v1_gen2_child1_1": {
-        "id": "ffa_boxcar_filter_v1_gen2_child1_1",
-        "code": "def boxcar_matched_filter(signal, boxcar_length):\n        if not signal or not isinstance(signal, list) or not all(isinstance(x, (int, float)) for x in signal) or len(signal) < 1:\n        return None\n    \n    if not isinstance(boxcar_length, int) or boxcar_length < 1 or len(signal) < boxcar_length:\n        return None\n    \n    result = []\n    for i in range(len(signal) - boxcar_length + 1):\n        sum_val = sum(signal[i:i+boxcar_length])\n        result.append(sum_val)\n    \n    return result",
-        "fitness_scores": {
-            "correctness": 0.0,
-            "runtime_ms": Infinity,
-            "passed_tests": 0.0,
-            "total_tests": 0.0
-        },
-        "generation": 2,
-        "parent_id": "ffa_boxcar_filter_v1_gen0_prog1",
-        "island_id": 1,
-        "errors": [
-            "SyntaxError: expected an indented block after 'if' statement on line 2 at line 3, offset 9"
-        ],
-        "status": "failed_evaluation",
-        "created_at": 1769670552.858172,
-        "task_id": null
-    },
-    "ffa_boxcar_filter_v1_gen2_child1_2": {
-        "id": "ffa_boxcar_filter_v1_gen2_child1_2",
-        "code": "def boxcar_matched_filter(signal, boxcar_length):\n    if not signal or not isinstance(signal, list) or not all(isinstance(x, (int, float)) for x in signal):\n        return None\n    \n    if not isinstance(boxcar_length, int) or boxcar_length < 1:\n        return None\n    \n    if len(signal) < boxcar_length:\n        return None\n    \n    result = []\n    for i in range(len(signal) - boxcar_length + 1):\n                sum_val = sum(signal[i:i+boxcar_length]) / boxcar_length\n        result.append(sum_val)\n    \n    return result",
-        "fitness_scores": {
-            "correctness": 0.0,
-            "runtime_ms": Infinity,
-            "passed_tests": 0.0,
-            "total_tests": 0.0
-        },
-        "generation": 2,
-        "parent_id": "ffa_boxcar_filter_v1_gen0_prog1",
-        "island_id": 1,
-        "errors": [
-            "SyntaxError: unindent does not match any outer indentation level at line 14, offset 31"
-        ],
-        "status": "failed_evaluation",
-        "created_at": 1769670552.9321375,
+        "created_at": 1769670776.9297848,
         "task_id": null
     }
 }

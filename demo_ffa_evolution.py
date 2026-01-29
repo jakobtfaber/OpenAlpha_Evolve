@@ -88,11 +88,12 @@ import numpy as np
 
 # TASK-DEFINITION
 # id: ffa_boxcar_filter_v1
-# description: Optimize the boxcar matched filter for FFA pulsar detection
+# description: Implement boxcar matched filter with CIRCULAR convolution. Takes numpy array (profile) and int (width). Returns array of SAME LENGTH. For each position i, sum elements i to i+width-1 with wrap-around, then divide by sqrt(width).
 # function_name_to_evolve: boxcar_matched_filter
+# allowed_imports: [numpy, math]
 # input_output_examples:
 #   - input: [[1.0, 2.0, 3.0, 4.0], 2]
-#     output: [2.12, 3.54, 4.95, 3.54]  # Approximate - circular convolution
+#     output: [2.12132, 3.53553, 4.94975, 3.53553]
 # constraints:
 #   - correctness_tolerance: 1e-8
 #   - snr_error_tolerance: 0.01
